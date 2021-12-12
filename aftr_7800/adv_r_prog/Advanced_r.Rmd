@@ -1,0 +1,54 @@
+---
+title: "Advanced R"
+output: html_notebook
+---
+
+Source : https://adv-r.hadley.nz/index.html
+The book is designed primarily for R users who want to improve their programming skills and understanding of the language. It should also be useful for programmers coming to R from other languages, as help you to understand why R works the way it does.
+
+If you’re looking for the 1st edition, you can find it at http://adv-r.had.co.nz/.
+
+You may also be interested in:
+
++ *Advanced R Solutions* by Malte Grosser and Henning Bumann, provides worked solutions to the exercises in this book.
+
++ *R for Data Science* which introduces you to R as a tool for doing data science, focussing on a consistent set of packages known as the tidyverse.
+
++ *R Packages* which teaches you how to make the most of R’s fantastic package system.
+
+## major changes
+
++ 2nd Ed has color for better comprehension of the syntax of code chunks when calling functions. 100 additional diagrams
+
++ 2nd Ed goes beyond "base R" functions with the goal of providing programers with more options in designing packages and functions. Many functions have evolved or were created since the 1st Ed that take priority due to the efficency or comprehensive or multifacited appliciability. Though the author (Hadley Wickham) continues to show base equivalents in sidebars, footnotes, and where needed, in individual sections, but if you want to see the purest base R expression of the ideas in this book, I recommend reading the first edition, which you can find online at http://adv-r.had.co.nz.
+
+## this book is for
+
++  Intermediate R programmers who want to dive deeper into R, understand how the language works, and learn new strategies for solving diverse problems.
+
++  Programmers from other languages who are learning R and want to understand why R works the way it does.
+
+To get the most out of this book, you’ll need to have written a decent amount of code in R or another programming language. You should be familiar with the basics of data analysis (i.e. data import, manipulation, and visualisation), have written a number of functions, and be familiar with the installation and use of CRAN packages.
+
+This book walks the narrow line between being a reference book (primarily used for lookup), and being linearly readable. 
+
+If you are looking for specific help solving the exercises in this book, solutions from Malte Grosser and Henning Bumann are available at https://advanced-r-solutions.rbind.io.
+
+ 
+Throughout this book I use `f()` to refer to functions, `g` to refer to variables and function parameters, and `h/` to paths.
+
+Larger code blocks intermingle input and output. Output is commented (`#>`) so that if you have an electronic version of the book, e.g., https://adv-r.hadley.nz/, you can easily copy and paste examples into R.
+
+Many examples use random numbers. These are made reproducible by `set.seed(1014)`, which is executed automatically at the start of each chapter.
+
+# names and values
+
+This chapter segment focuses on the distinction between the above (an object and its name)
+
+A deeper understanding of names and values will:
+
++ give you to the additional ability to predict the efficency of a function by way of the performance and memory cost.
+
++ write better code/functions
+
++ understand the tools/options in optimization

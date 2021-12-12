@@ -1,0 +1,34 @@
+---
+title: "Learnr"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Working my way through the Learnr tuitorial (https://r4ds.had.co.nz/data-visualisation.html) on top of data camp lessons and biol7800 (introtodatascience)
+
+# Chapter 3 Data Visualization
+
+Using ggplot this chapter will focus on the grammar used to specify the layers of the graph
+
+## req materials
++ Tidyverse (datasets, ggplot pkg)
+
+
+
+```{r}
+library(tidyverse)
+```
+usually this loads a list of packages (ggplot, tibble, tidyr, ect) somtimes the functions of these overlap those of base R or other loaded pkgs`tidyverse_conflicts()`. in that case R chooses the one loaded latest and masks the other. when this masking/overlap occurs just use the syntax `specific_pkg:: function ()` to specify the function and package you mean.
+
+## working /w `mpg` dataframe
+
+using ggplot: 
++ Do cars with big engines use more fuel than cars with small engines? 
++ What does the relationship between engine size and fuel efficiency look like? Is it positive? Negative? Linear? Nonlinear?
+
+
+```{r}
+
+```
+

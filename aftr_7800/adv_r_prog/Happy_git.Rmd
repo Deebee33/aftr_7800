@@ -1,0 +1,246 @@
+---
+title: "Happy Git and GitHub for the useR"
+output: html_notebook
+---
+source: https://happygitwithr.com/
+author: Jennifer Bryan
+
+With this I will learn how to install Git and work with github via Rstudio and the shell
+
+The use of Git/GitHub in data science has a slightly different vibe from that of pure software develoment, due to differences in the user’s context and objective. Happy Git aims to complement existing, general Git resources by highlighting the most rewarding usage patterns for data science. This perspective on the Git landscape is presented in *Basic Git Concepts* and *Daily Workflows*. (https://happygitwithr.com/git-intro.html#git-intro, https://happygitwithr.com/workflows-intro.html#workflows-intro)
+
+Github offers unlimited free private repos for all. They support up to three collaborators
+
+GitHub “Organizations” can be extremely useful for courses or research/lab groups, where you need some coordination across a set of repos and users.https://education.github.com/
+Official nonprofit organizations and charities: GitHub for Good
+https://github.com/nonprofit
+
+# basics
+
+Shell- (bash) a program that directs your computer based on your instructions instead of selecting from the commands provided by a traditional program with icons.
+Pseudo-synonyms are “terminal”, “command line”, and “console”. There’s a whole StackExchange thread on the differences (What is the difference between Terminal, Console, Shell, and Command Line?)
+
+Starting the shell
+
+You can launch a shell from RStudio. This is often handy, because RStudio makes every effort to put you in a sane working directory, i.e. in the current project.
+
++ Tools > Terminal launches a shell within RStudio, graphically and process-wise. I believe this is usually what you want.
+
++ Tools > Shell … launches a shell external to RStudio.
+
+Windows
+
+Windows is not the ideal platform for scientific computing and software development. A lot of the functionality is going to feel janky and strapped on. Because it is.
+
+There are no fewer than 4 possible shells you can end up in. Unless you know better, you almost certainly want to be in a Git Bash shell, especially here in Happy Git.
+
+Windows users will want to understand the different types of shell, how to launch them, and how to tell which one you’re in.
+
+Git Bash
+
+Git Bash is a bash shell that ships with Git for Windows
+RStudio should automatically detect the presence of Git Bash. You can inspect and influence this directly via Tools > Global Options > Terminal.
+Git Bash is always the Windows shell we are targeting in Happy Git instructions.
+to confirm you are in the bash shell type ` echo $SHELL` into command line
+`/bin/bash` should return for bash, git bash will return `usr/bin/bash`
+
+in 2016, Microsoft launched the Windows Subsystem for Linux (WSL), “a new Windows 10 feature that enables you to run native Linux command-line tools directly on Windows”
+
+Windows bottom line
+When in doubt, you probably want to be in a Git Bash shell.
+
+Basic shell commands
+
+`pwd` (print working directory). Shows directory or “folder” you are currently operating in. This is not necessarily the same as the `R` working directory you get from `getwd()`.
+
+`ls` (list files). Shows the files in the current working directory. This is equivalent to looking at the files in your Finder/Explorer/File Manager. Use `ls -a` to also list hidden files, such as .Rhistory and .git.
+
+`cd` (change directory). Allows you to navigate through your directories by changing the shell’s working directory. You can navigate like so:
+go to subdirectory foo of current working directory: `cd foo`
+go to parent of current working directory: `cd ..`
+go to your “home” directory: `cd ~` or simply `cd`
+go to directory using absolute path, works regardless of your current working directory: `cd /home/my_username/Desktop`. 
+
+Pro tip 1: Dragging and dropping a file or folder into the terminal window will paste the absolute path into the window.
+Pro tip 2: Use the tab key to autocomplete unambiguous directory and file names. Hit tab twice to see all ambiguous options
+
+Use arrow-up and arrow-down to repeat previous commands. Or search for previous commands with CTRL + r.
+
+git cmds
+
+A few Git commands:
+
+`git status` is the most used git command and informs you of your current branch, any changes or untracked files, and whether you are in sync with your remotes.
+`git remote -v` lists all remotes. Very useful for making sure git knows about your remote and that the remote address is correct.
+git remote add origin GITHUB_URL adds the remote GITHUB_URL with nickname origin.
+`git remote set-url` origin GITHUB_URL changes the remote url of origin to GITHUB_URL. This way you can fix typos in the remote url.
+
+more git commands here: https://www.hostinger.com/tutorials/basic-git-commands
+
+# Installing a git client
+
+Learning to use version control is ROUGH at first. Beginning with a GUI  – as opposed to the command line – helps with the adjustment by illustrating the workflow or the path from cloning a repository to pushing your edits. I call this sort of helper application a Git client. It’s really a Git(Hub) client because it also helps you interact with GitHub or other remotes.
+
+“Git” is really just a collection of individual commands you execute in the shell. This interface is not appealing for everyone. Some may prefer to do Git operations via a client with a graphical interface.
+
+Recommended Git clients
+GitKraken( https://www.gitkraken.com/)is a free, powerful Git(Hub) client that is my current favorite. It’s especially exciting because it works on Windows, macOS, and Linux. This is great news, especially for long-suffering Linux users who previously had very few options. I used the free for version for years, which works great, but now I happily pay money for the pro version.
+
+SourceTree(https://www.sourcetreeapp.com/) is another free client that I used to highly recommend. It was my first beloved Git client, but I eventually had to give it up, due to long-standing bugs / deficiencies that seemed like they would never be fixed (macOS bug re: leaking file handles, no ability to control font size). GitKraken feels much more actively developed and has completely supplanted SourceTree for me.
+
+GitHub offers a free Git(Hub) client, GitHub Desktop (https://desktop.github.com/), for Windows and macOS. Although we previously discouraged its use, GitHub’s client has since gotten a thorough makeover that eliminates several of our concerns, so we’re cautiously optimistic. GitHub Desktop is aimed at beginners who want the most useful features of Git front and center. The flipside is that it may not support some of the more advanced workflows exposed by the clients above and, consequently, may not develop your mental model of Git as thoroughly.
+
+Browse even more Git(Hub) clients (http://git-scm.com/downloads/guis).
+
+Once you have Github and R installed you must establish a connection between your respository and your remote (r) this speaks on the connection between tools on your computer and between your computer and GitHub.
+
+## Personal access token for HTTPS
+
+When we interact with a remote Git server, such as GitHub, we have to include credentials in the request. This proves we are a specific GitHub user, who’s allowed to do whatever we’re asking to do.
+
+Git can communicate with a remote server using one of two protocols, HTTPS or SSH, and the different protocols use different credentials.
+
+Here we describe the credential setup for the HTTPS protocol, which is what we recommend if you have no burning reason to pick SSH. With HTTPS, we will use a personal access token (PAT). 
+Let it be known that the password that you use to login to GitHub’s website is NOT an acceptable credential when talking to GitHub as a Git server. This was possible in the past (and may yet be true for other Git servers), but those days are over at GitHub. You can learn more in their blog post Token authentication requirements for Git operations (https://github.blog/2020-12-15-token-authentication-requirements-for-git-operations/).
+
+To get a token Go to https://github.com/settings/tokens and click “Generate token”. follow instructions and save the information  provided 
+
+Or, from R, do:
+`usethis::create_github_token()`
+
+Copy the generated PAT to your clipboard. Or leave that browser window open and available for a little while, so you can come back to copy the PAT.
+
+Provide this PAT next time a Git operation asks for your password
+You could even get out ahead of this and store the PAT explicitly right now. In R, call `gitcreds::gitcreds_set()` to get a prompt where you can paste your PAT:
+
+Read on to learn more about:
+
+How to decide between the HTTPS and SSH protocols
+https://happygitwithr.com/https-pat.html#https-vs-ssh
+PAT scopes, names, and expiration  https://happygitwithr.com/https-pat.html#get-a-pat
+PAT storage
+https://happygitwithr.com/https-pat.html#store-pat
+Troubleshooting
+https://happygitwithr.com/https-pat.html#pat-troubleshooting
+
+HTTPS versus SSH
+
+HTTPS- Hypertext Transfer Protocol Secure is an extension of the Hypertext Transfer Protocol. It is used for secure communication over a computer network, and is widely used on the Internet. In HTTPS, the communication protocol is encrypted using Transport Layer Security or, formerly, Secure Sockets Layer.
+
+first off HTTPS is easier than ssh
+
+Another advantage of HTTPS is that the PAT we’ll set up for that can also be used with GitHub’s REST API. That might not mean anything to you (yet), but there are many R packages that call GitHub’s API on your behalf (devtools+usethis, remotes, pak, gh, etc.). Configuring your PAT kills two birds with one stone: this single credential can be used to authenticate to GitHub as a regular Git server and for its REST API. 
+
+An API, or application programming interface, is a set of rules that define how applications or devices can connect to and communicate with each other. APIs provide a standardized way for two applications to send data back and forth. A REST API is an API that conforms to the design principles of the REST, or representational state transfer architectural style.
+REST is a set of guidelines that software can use to communicate over the internet in order to make integrations simple and scalable. This means that when a client requests a resource using a REST API, the server transfers back the current state of the resource in a standardized representation.
+
+In other words, REST APIs work by fielding requests for a resource and returning all relevant information about the resource, translated into a format that clients can easily interpret (this format is determined by the API receiving requests).
+
+ If you authenticate via SSH for “regular” Git work, you will still have to set up a PAT for work that uses the REST API.
+ 
+ On github.com, assuming you’re signed in, you can manage your personal access tokens from https://github.com/settings/tokens, also reachable via Settings > Developer settings > Personal access tokens. You could click on “Generate new token” here or, perhaps even better, you could call `usethis::create_github_token()` from R:
+ 
+ The usethis approach takes you to a pre-filled form where we have pre-selected some recommended scopes, which you can look over and adjust before clicking “Generate token”. At the time of writing, the usethis-recommended scopes are “repo”, “user”, “gist”, and “workflow”.
+
+ It is a very good idea to describe the token’s purpose in the Note field, because one day you might have multiple PATs. We recommend naming each token after its use case, such as the computer or project you are using it for, e.g. “personal-macbook-air” or “vm-for-project-xyz”. In the future, you will find yourself staring at this list of tokens, because inevitably you’ll need to re-generate or delete one of them. Make it easy to figure out which token you’ve come here to fiddle with.
+ 
+ If you use a password management app, such as 1Password or LastPass (highly recommended!), you might want to also add this PAT (and its Note) to the entry for GitHub, where you’re already storing your username and password. Storing your PAT in the Git credential store is a semi-persistent convenience, sort of like a browser cache or “remember me” on a website3 and it’s conceivable you will need to re-enter your PAT in the future. You could decide to embrace the impermanence of your PAT and, if it somehow goes missing, you’ll just re-generate the PAT (https://happygitwithr.com/https-pat.html#regenerate-pat) and re-store it. If you accept the default 30-day expiration period, this is a workflow you’ll be using often anyway. But if you create long-lasting tokens or want to feel free to play around with the functions for setting or clearing your Git credentials, it can be handy to have your own record of your PAT in a secure place, like 1Password or LastPass.
+ 
+ Call an R function to store your credentials
+There are two R packages for accessing the Git credential store:
+
+gitcreds
+credentials
+
+gitcreds package
+If you don’t have gitcreds installed, install via install.packages("gitcreds"). If you’ve installed usethis, you will already have gitcreds, because usethis uses gh and gh uses gitcreds.
+
+Call gitcreds::gitcreds_set(). If you don’t have a PAT stored already, it will prompt you to enter your PAT. Paste!
+
+### PAT troubleshooting
+PAT doesn’t persist on Linux
+
+The credential helpers used by Git take advantage of official OS-provided credential stores on macOS and Windows, but sadly there is no exact equivalent on Linux.
+
+The easiest thing to do is to configure Git to “cache” your credentials (vs “store”), which is more time-limited. Then set the cache timeout to some suitably long period of time. Here, we set the timeout to ten million seconds or around 16 weeks, enough for a semester.
+
+`git config --global credential.helper 'cache --timeout=10000000'`
+
+This still may not make your PAT available to R packages. In this case, you may need to use the older, less secure approach of storing your PAT in `.Renviron.` `usethis::edit_r_environ()` opens that file for editing.
+
+`usethis::edit_r_environ()`
+Add a line like this, but substitute your PAT:
+
+`GITHUB_PAT=ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx`
+Make sure this file ends in a newline! Lack of a newline can lead to silent failure to load startup files, which can be tricky to debug. Take care that this file is not accidentally pushed to the cloud, e.g. Google Drive or GitHub.
+
+Restart R for changes in `.Renviron` to take effect.
+
+# Test github connection
+
+making sure your connection works through pushing n pulling github
+
+go to github home page with the activity of people you follow in the center and a list of your repositories on left
+near your repositories theres a new button to set up a new repository
+
+How to fill this in:
+
+Repository template: No template.
+Repository name: myrepo or whatever you wish (we’ll delete this soon).
+Description: “Repository for testing my Git/GitHub setup” or similar. It’s nice to have something here, so you’ll see it appear in the README.
+Public.
+Initialize this repository with: Add a README file.
+Click the big green button that says “Create repository”.
+
+Now click the big green button that says “<> Code”.
+
+Copy a clone URL to your clipboard. If you’re taking our default advice, copy the HTTPS URL. 
+
+## Clone the repo to your local computer
+We have a few ways to do this: with command line Git or via RStudio.
+
+11.2.1 Clone with command line Git
+Go to the shell .
+
+Take charge of – or at least notice! – what directory you’re in. pwd displays the working directory. cd is the command to change directory. Personally, I would do this sort of thing in ~/tmp.
+
+Clone myrepo from GitHub to your computer. Use the URL we just copied from GitHub. This URL should have your GitHub username and the name of your practice repo. If your shell cooperates, you should be able to paste the whole https://.... bit that we copied above. But some shells are not (immediately) clipboard aware. In that sad case, you must type it. Accurately.
+
+`git clone https://github.com/YOUR-USERNAME/YOUR-REPOSITORY.git`
+This should look something like this:
+
+~/tmp % git clone https://github.com/jennybc/myrepo.git
+Cloning into 'myrepo'...
+remote: Enumerating objects: 3, done.
+remote: Counting objects: 100% (3/3), done.
+remote: Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
+Receiving objects: 100% (3/3), done.
+
+Make this new repo your working directory, list its files, display the README, and get some information on its connection to GitHub:
+
+`cd myrepo`
+`ls`
+`head README.md`
+`git remote show origin`
+
+Make a local change, commit, and push
+Add a line to README and verify that Git notices the change:
+
+`echo "A line I wrote on my local computer  " >> README.md`
+`git status`
+
+This should look something like this:
+```{r, eval=FALSE}
+~/tmp/myrepo % echo "A line I wrote on my local computer" >> README.md
+
+~/tmp/myrepo % git status
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   README.md
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
