@@ -11,6 +11,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Cloning repos /w R
 https://happygitwithr.com/push-pull-github.html
+https://www.hostinger.com/tutorials/basic-git-commands
 
 When you want to pull a repo from git hub to work on its as simple as copying the code on github
 + through github find the repo with the info you want
