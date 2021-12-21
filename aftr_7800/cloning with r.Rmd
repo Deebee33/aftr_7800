@@ -10,6 +10,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ## Cloning repos /w R
+https://happygitwithr.com/push-pull-github.html
 
 When you want to pull a repo from git hub to work on its as simple as copying the code on github
 + through github find the repo with the info you want
@@ -17,7 +18,7 @@ When you want to pull a repo from git hub to work on its as simple as copying th
 
 1st https://github.com/Deebee33/aftr_7800
 2nd click code and copy the https url (the location of the code on github to direct your terminal)
-closing your current project such that you have a uncomitted workspace
+closing your current project such that you have a uncommitted workspace
 
 switching wd to your github dir for organization
 ```{r, eval=FALSE}
@@ -31,3 +32,64 @@ git clone https://github.com/Deebee33/aftr_7800.git
 ```
 
 then using the WSL terminal to clone the https address of the code you want to work on
+
+Make this new repo your working directory, list its files, display the README, and get some information on its connection to GitHub:
+
+`cd myrepo`
+`ls`
+`head README.md`
+`git remote show origin`
+
+Make a local change, commit, and push
+Add a line to README and verify that Git notices the change:
+
+`echo "A line I wrote on my local computer  " >> README.md`
+`git status`
+
+derek@red:~/Documents/GitHub/aftr_7800$ git remote show origin
+* remote origin
+  Fetch URL: https://github.com/Deebee33/aftr_7800.git
+  Push  URL: https://github.com/Deebee33/aftr_7800.git
+  HEAD branch: main
+  Remote branch:
+    main tracked
+  Local branch configured for 'git pull':
+    main merges with remote main
+  Local ref configured for 'git push':
+    main pushes to main (up to date)
+derek@red:~/Documents/GitHub/aftr_7800$ echo "writing this from the red remote at B&N" >> README.md
+derek@red:~/Documents/GitHub/aftr_7800$ git status
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   README.md
+
+no changes added to commit (use "git add" and/or "git commit -a")
+derek@red:~/Documents/GitHub/aftr_7800$ git add <README.md>
+bash: syntax error near unexpected token `newline'
+derek@red:~/Documents/GitHub/aftr_7800$ git add README.md
+derek@red:~/Documents/GitHub/aftr_7800$ git commit README.md
+
+ Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+# On branch master
+this is VIM editor change to doom emacs
+ In vim, you can press i to start entering text and save by pressing esc and :wq which would commit the message you entered.
+
+In the above state, to quit without committing, you can do :q instead of the :wq as mentioned above.
+
+
+This is a text editor, likely vi or vim.
+
+You can press the i key to go insert mode and type your commit message, escape when you're done, then ZZ (twice, uppercase) to exit.
+
+Or, you can put the commit message in the command line with the -m option.
+
+The text editor has some nice perks, like being able to easily enter new lines, etc. If vi isn't good for you, you can use git config --global core.editor <editorname> to change your editor to something more to your liking.
+https://stackoverflow.com/questions/39798997/how-do-i-complete-a-git-commit
+
+[main 0fdb4ca] an update from B&N
+ 1 file changed, 1 insertion(+)
