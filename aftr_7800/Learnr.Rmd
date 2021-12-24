@@ -42,8 +42,20 @@ displ_vs_hwy<-ggplot(data = mpg, mapping = aes(displ, hwy)) + geom_point()
 #or specify a plot of mpg data, then (+) apply the scatter plot layer (geom point) map x and y with displ and hwy
 displ_vs_hwy_b<-ggplot(mpg) + geom_point(mapping = aes(x = displ, y = hwy))
 ```
-
+displ- a car’s engine size, in litres.
+hwy- a car’s fuel efficiency on the highway, in miles per gallon (mpg).
 ```{r}
 displ_vs_hwy_b
 ```
+as engine size increases (displ) highway mpg decreases (hwy)
+
+Its easier to think of ggplots commands as layers with specifications 
+so first you start with `ggplot()` to specify this as a plot
+then you add your data as `data = mpg` and using `geom_point` to specify a scatterplot
+designate your axes and values with aes and specifying your independent as displ and dependent as hwy 
+does displ affect hwy?
+another way is to call ggplot to draw a plot
+designate your data as mpg
+specify axes and asthetics with aes x is displ, y is hwy
+add geom_point to add scatterplot layer to graph where x n y have been designated
 
