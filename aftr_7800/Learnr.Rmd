@@ -19,7 +19,7 @@ Using ggplot this chapter will focus on the grammar used to specify the layers o
 ```{r}
 library(tidyverse)
 ```
-usually this loads a list of packages (ggplot, tibble, tidyr, ect) somtimes the functions of these overlap those of base R or other loaded pkgs`tidyverse_conflicts()`. in that case R chooses the one loaded latest and masks the other. when this masking/overlap occurs just use the syntax `specific_pkg:: function ()` to specify the function and package you mean.
+usually this loads a list of packages (ggplot, tibble, tidyr, ect) sometimes the functions of these overlap those of base R or other loaded pkgs`tidyverse_conflicts()`. in that case R chooses the one loaded latest and masks the other. when this masking/overlap occurs just use the syntax `specific_pkg:: function ()` to specify the function and package you mean.
 
 ## working /w `mpg` dataframe
 
@@ -27,7 +27,23 @@ using ggplot:
 + Do cars with big engines use more fuel than cars with small engines? 
 + What does the relationship between engine size and fuel efficiency look like? Is it positive? Negative? Linear? Nonlinear?
 
+mpg contains observations collected by the US Environmental Protection Agency on 38 models of car.
 
 ```{r}
+view(mpg)
+mpg
 
 ```
+plot the data from mpg, disp vs hwy
+
+```{r}
+#make a plot with mpg data, map x n y with displ and hwy. then (+) add points based on displ and hwy with geom point specifying scatterplot
+displ_vs_hwy<-ggplot(data = mpg, mapping = aes(displ, hwy)) + geom_point()
+#or specify a plot of mpg data, then (+) apply the scatter plot layer (geom point) map x and y with displ and hwy
+displ_vs_hwy_b<-ggplot(mpg) + geom_point(mapping = aes(x = displ, y = hwy))
+```
+
+```{r}
+displ_vs_hwy_b
+```
+
