@@ -321,3 +321,9 @@ Step 3 edit required text (replace or delete or insert)
 Step 4 hit Esc key (exit from insert mode if you insert or replace text)
 
 Step 5 type :wq
+
+then git push is used to send local commits to the master branch of the remote repository.
+```{r, eval=FALSE}
+git push origin
+```
+
