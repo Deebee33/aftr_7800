@@ -53,9 +53,45 @@ Its easier to think of ggplots commands as layers with specifications
 so first you start with `ggplot()` to specify this as a plot
 then you add your data as `data = mpg` and using `geom_point` to specify a scatterplot
 designate your axes and values with aes and specifying your independent as displ and dependent as hwy 
+`ggplot(data=mpg, mapping= aes(displ, hwy))+ geom_point`
+
 does displ affect hwy?
-another way is to call ggplot to draw a plot
-designate your data as mpg
-specify axes and asthetics with aes x is displ, y is hwy
-add geom_point to add scatterplot layer to graph where x n y have been designated
+
+another way is to call ggplot to draw a plot 
+designate your data as mpg`ggplot(mpg)`
+specify axes and aesthetics with aes x is displ, y is hwy
+add geom_point to add scatterplot layer to graph where x n y have been designated `ggplot(mpg)+geom_point(mapping=aes(displ, hwy))`
+
+## general graphing template
+`ggplot(data= <dataset>) + <geom__ graph type>(mapping= aes(<x,y mappings>))`
+
+## Aesthetic mapping
+
+An aesthetic is a visual property of the objects in your plot. Aesthetics include things like the size, the shape, or the color of your points. You can display a point in different ways by changing the values of its aesthetic properties. Since we already use the word “value” to describe data, let’s use the word “level” to describe aesthetic properties. Here we change the levels of a point’s size, shape, and color to make the point small, triangular, or blue
+
+there are 6 outliers on the right side of the displ vs hwy showwing unusually high hwy miles per gallon 
+we can highlight this by adding an additional aes mapping based on class 
+
+```{r}
+displ_hwy_class<-ggplot(mpg)+ geom_point(aes(displ, hwy, color= class))
+```
+
+
+alternative
+```{r}
+ggplot(data = mpg, aes(displ, hwy, color= class)) + geom_point()
+```
+To map an aesthetic to a variable, associate the name of the aesthetic to the name of the variable inside `aes()`.ggplot2 will automatically assign a unique level of the aesthetic (here a unique color) to each unique value of the variable, a process known as scaling. ggplot2 will also add a legend that explains which levels correspond to which values.
+
+aesthetic options include size,shape,color,alpha/transparency
+
+For each aesthetic, you use aes() to associate the name of the aesthetic with a variable to display`color=class`. The aes() function gathers together each of the aesthetic mappings used by a layer and passes them to the layer’s mapping argument.- figure a better way to say this
+
+You can also set the aesthetic properties of your geom manually. For example, we can make all of the points in our plot blue
+
+```{r}
+bluepts<-ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy), color = "blue")
+bluepts
+```
 
