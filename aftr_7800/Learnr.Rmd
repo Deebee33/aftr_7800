@@ -11,7 +11,7 @@ Working my way through the Learnr tuitorial (https://r4ds.had.co.nz/data-visuali
 
 Using ggplot this chapter will focus on the grammar used to specify the layers of the graph
 
-## req materials
+## req materials 
 + Tidyverse (datasets, ggplot pkg)
 
 
