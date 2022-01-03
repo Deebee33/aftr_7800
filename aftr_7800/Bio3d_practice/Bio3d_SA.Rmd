@@ -1,0 +1,82 @@
+---
+title: "Bio3d_SA"
+author: "Derek Bratcher"
+date: "1/3/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Basic intro to PDB strucutre manipulation and analysis with Bio3D
+
+```{r}
+library(bio3d)
+```
+
+list all commands /w 'lbio3d()' or 'help(package=bio3d)'.
+
+for help with a function 'help(FunctionName)'
+
+use 'help.search("topic")' to filter the doccumentation for a specific term
+ex 'help.search("pca")'
+
+'example(function)' will execute the listed example of a function from the help file/doccumentation
+try 'example(plot.bio3d)'
+
+ b-factor values and SS from pdb of 1bg2
+ 
+first read pdb file and map the bfac from pdb coord file to bfac
+plot bfac and sse (sec struct estimation) add y label and color gray 
+
+next plot
+
+use pdb residue numbers and include short sec struct ele
+
+assign term bfac with bfac col of pdb
+
+make plot with y=bfac vs sec struct est of pdb, label y b-factor color gray
+
+next plot
+
+```{r}
+# Plot of B-factor values along with secondary structure from PDB
+pdb <- read.pdb( "1bg2" )
+bfac <- pdb$atom[pdb$calpha,"b"]
+plot.bio3d(bfac, sse=pdb, ylab="B-factor", col="gray")
+```
+
+
+```{r}
+# Plot of B-factor values along with secondary structure from PDB
+
+plot.bio3d(pdb$atom[pdb$calpha,"b"], sse=pdb, resno=pdb, ylab="B-factor", typ="l", lwd=1.5, col="blue", sse.min.length=0)
+```
+
+```{r, eval=FALSE}
+# Calculate secondary structure using stride() or dssp()
+
+
+#sse_d <- dssp(pdb)_filed claim with bitbucket
+
+# Plot of B-factor values along with calculated secondary structure
+
+plot.bio3d(pdb$atom[pdb$calpha,"b"], sse=sse_d, ylab="B-factor", typ="l", col="blue", lwd=2)
+
+```
+
+
+```{r}
+# Plot 'aligned' data respecting gap positions
+
+attach(transducin)
+pdb_b = read.pdb("1tnd")
+
+pdb_b = trim.pdb(pdb_b, inds=atom.select(pdb_b, chain="A"))
+
+# Plot of B-factor values with gaps
+
+plot.bio3d(pdbs$b, resno=pdb_b, sse=pdb_b, ylab="B-factor")
+```
+
