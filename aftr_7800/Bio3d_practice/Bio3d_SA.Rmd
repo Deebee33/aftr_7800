@@ -58,7 +58,7 @@ plot.bio3d(pdb$atom[pdb$calpha,"b"], sse=pdb, resno=pdb, ylab="B-factor", typ="l
 # Calculate secondary structure using stride() or dssp()
 
 
-#sse_d <- dssp(pdb)_filed claim with bitbucket
+sse_d <- dssp(pdb, exefile = '/usr/local/bin/mkdssp')
 
 # Plot of B-factor values along with calculated secondary structure
 
