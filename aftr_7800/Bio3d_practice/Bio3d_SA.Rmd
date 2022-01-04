@@ -11,41 +11,81 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Basic intro to PDB strucutre manipulation and analysis with Bio3D
 
+location: http://thegrantlab.org/bio3d_v2/tutorials
+
 ```{r}
 library(bio3d)
 ```
 
-list all commands /w 'lbio3d()' or 'help(package=bio3d)'.
+list all commands /w `lbio3d()` or 'help(package=bio3d)'.
 
-for help with a function 'help(FunctionName)'
+for help with a function `help(FunctionName)`
 
-use 'help.search("topic")' to filter the doccumentation for a specific term
+use `help.search("topic")` to filter the doccumentation for a specific term
 ex 'help.search("pca")'
 
-'example(function)' will execute the listed example of a function from the help file/doccumentation
-try 'example(plot.bio3d)'
+`example(function)` will execute the listed example of a function from the help file/doccumentation
+try `example(plot.bio3d)`
+
+```{r}
+example(plot.bio3d)
+```
+
 
  b-factor values and SS from pdb of 1bg2
  
 first read pdb file and map the bfac from pdb coord file to bfac
-plot bfac and sse (sec struct estimation) add y label and color gray 
+pdb <- read.pdb( "1bg2" )
+bfac <- pdb$atom[pdb$calpha,"b"]
 
-next plot
+plot bfac and sse (sec struct estimation) add y label and color gray 
+plot.bio3d(bfac, sse=pdb, ylab="B-factor", col="gray")
+
+### next plot
 
 use pdb residue numbers and include short sec struct ele
 
-assign term bfac with bfac col of pdb
 
-make plot with y=bfac vs sec struct est of pdb, label y b-factor color gray
+make plot using the bfactors from the pdb file, the sec structure est from applying dssp to pdb, label y axis "b-factor, color is blue, type/typ of plot is line, line width/lwd is 2
+
+plot.bio3d(pdb$atom[pdb$calpha,"b"], sse=sse, ylab="B-factor", typ="l", col="blue", lwd=2)
+assign term bfac with bfac col of pdb
 
 next plot
 
-```{r}
-# Plot of B-factor values along with secondary structure from PDB
-pdb <- read.pdb( "1bg2" )
-bfac <- pdb$atom[pdb$calpha,"b"]
-plot.bio3d(bfac, sse=pdb, ylab="B-factor", col="gray")
-```
+Plot 'aligned' data respecting gap positions /w transducin
+
+read 1tnd from online
+pdb = read.pdb("1tnd")
+
+trim pdb for chain a using function atom.select
+(when given the pdb and the specified selection based on pdb it returns the atom n xyz coordinates)
+
+ pdb = trim.pdb(pdb, inds=atom.select(pdb, chain="A"))
+ 
+ plot b factor values with gaps
+ 
+ make a plot of the bfactors col of pdb vs pdb residues, add sec struct ele based on dssp of pdb. label y axis b-factor
+
+plot.bio3d(pdbs$b, resno=pdb, sse=pdb, ylab="B-factor")
+
+ Plot of B-factor values after removing all gaps
+
+plot.bio3d(pdbs$b, rm.gaps=TRUE, resno = pdb, sse=pdb, ylab="B-factor")
+
+detatch transducin to remove from search path
+detach(transducin)
+
+also r can always be interrupted /w ctrl+c
+q() to quit the current session
+run `demo(package="bio3d")` to see what else bio3d can do
+run `demo("nma")` on specific functions like nma to specify the demo
+
+Remember that you can get help on any particular function by using the command `?function` or `help(function)` from within R. 
+
+You can save an external representation of any R objects to a specified file using the save()command.  The objects can be read back from the file at a later time by using the function `load()`.
+
+
 
 
 ```{r}
@@ -54,9 +94,8 @@ plot.bio3d(bfac, sse=pdb, ylab="B-factor", col="gray")
 plot.bio3d(pdb$atom[pdb$calpha,"b"], sse=pdb, resno=pdb, ylab="B-factor", typ="l", lwd=1.5, col="blue", sse.min.length=0)
 ```
 
-```{r, eval=FALSE}
+```{r}
 # Calculate secondary structure using stride() or dssp()
-
 
 sse_d <- dssp(pdb, exefile = '/usr/local/bin/mkdssp')
 
@@ -78,5 +117,33 @@ pdb_b = trim.pdb(pdb_b, inds=atom.select(pdb_b, chain="A"))
 # Plot of B-factor values with gaps
 
 plot.bio3d(pdbs$b, resno=pdb_b, sse=pdb_b, ylab="B-factor")
+```
+# bio3d style
+
+bio3d is mainly composed of input output functions that convert alter analyze or graph data. the write up is available via `help(package=bio3d)` or by the commands like `help.search("topic/function")` or "http://thegrantlab.org/bio3d_v2/html/index.html"
+run `example(function)` to give an example as per the function. tuitorials on more complicated jobs are here "http://thegrantlab.org/bio3d_v2/tutorials"
+
+## Reading a PDB
+
+the `read pdb()` function can read a previously saved pdb file from local storage or pull from online pdb repository if given RCSB PBD ID
+
+```{r}
+#save pdb of protooncogenic ras protein 4q21 as pdb_1
+pdb_1<- read.pdb("4q21")
+
+# use print(pdb_1) or just pdb_1 to call a quick summary of 4q21 and view(pdb_1) to open separate page
+
+print(pdb_1)
+
+#notice the other values/attributes abbreviated at bottom 
+attributes(pdb_1)
+#treat like columns of a dataset and call via pdb_1$attribute
+head(pdb_1$calpha)
+#print data of first two atoms
+pdb_1$atom[1:2, ]
+# print a subset of the first two atoms based on atom serial number and atom type and space coordinates
+pdb$atom[1:2, c("eleno", "elety", "x","y","z")]
+
+
 ```
 
