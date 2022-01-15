@@ -145,5 +145,14 @@ pdb_1$atom[1:2, ]
 pdb$atom[1:2, c("eleno", "elety", "x","y","z")]
 
 
+
 ```
 
+using `plot.bio3d` with subsetting of the values/elements/attributes i can assemble a graph based on bfactors  of residues of 4q21 and use sse to apply est sec structure approx to top and btm 
+
+```{r}
+plot.bio3d(pdb$atom$b[pdb$calpha], sse=pdb, typ="l", ylab="B-factor")
+```
+
+objects created by `read.pdb()` are written to be of class pdb this tells other generic functions (like `atom.select(), nma(), print(), summary()` ect) how to proccess present the result of such data. 
+the pdb output is also given a second class (sse secondary structure elements) such that functions like `plot.bio3d` make use of the estimated sec structs and apply to the plot based on the residues involved
